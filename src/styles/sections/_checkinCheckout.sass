@@ -1,0 +1,236 @@
+@use '../helper/_variables' as *
+@use '../helper/_mixin' as *
+@use '../layout/_layout' as *
+
+@mixin gradient($deg)
+  background: linear-gradient($deg, $sec, $sec)
+
+@mixin button()
+  padding: .5rem 1rem
+  @include gradient($deg: 90deg)
+  border-radius: 4px
+  color: $light
+  @include fastTrans()
+  cursor: pointer
+
+  &:hover
+    transform: translateY(-4px) scale(1.01)
+    box-shadow: 0 2px 5px rgba($dark, .4)
+
+.popup-message
+  position: fixed
+  left: 0
+  top: 0
+  height: 100%
+  width: 100%
+  z-index: 100
+  @include flex($justify: center)
+  pointer-events: none
+  opacity: 0
+  @include trans()
+
+  &.active
+    opacity: 1
+    pointer-events: auto
+
+    .box
+      transform: scale(1)
+      opacity: 1
+
+  .message-bg
+    position: absolute
+    left: 0
+    top: 0
+    height: 100%
+    width: 100%
+    background-color: rgba($dark, .6)
+    backdrop-filter: blur(5px)
+    z-index: 1
+
+  .box
+    max-width: 300px
+    width: 100%
+    padding: 1.5rem
+    position: relative
+    background-color: $light
+    border-radius: 4px
+    box-shadow: 0 0 10px rgba($dark, .6)
+    z-index: 2
+    padding-top: 2rem
+    text-align: center
+    transform: scale(1.4)
+    opacity: 0
+    @include trans()
+
+    &.error
+      .message-icon
+        background-color: #c00c0c
+
+      .message-button
+        background: #c00c0c !important
+
+    .message-icon
+      position: absolute
+      top: 0
+      left: 50%
+      transform: translate(-50%, -50%)
+      height: 40px
+      width: 40px
+      border-radius: 50%
+      background-color: $pri
+      color: $light
+      font-size: 18px
+      @include flex($justify: center)
+
+    .message-title
+      font-size: 22px
+      font-weight: 600
+
+    p
+      font-size: 16px
+      margin: 1rem 0
+
+    .message-button
+      @include button()
+
+.checked-checkout-page
+  height: 80vh
+  width: 100%
+  position: relative
+
+  @keyframes pageLoading
+    0%
+      transform: translate(-50%, -50%) rotate(0)
+    100%
+      transform: translate(-50%, -50%) rotate(360deg)
+
+  .page-loading
+    position: absolute
+    left: 0
+    top: 0
+    height: 100%
+    width: 100%
+    z-index: 1000
+    background-color: $light
+    @include flex($justify: center)
+
+    &::after
+      content: ''
+      height: 4rem
+      width: 4rem
+      border-radius: 50%
+      border: 3px solid $light
+      border-top-color: #000
+      border-bottom-color: #000
+      animation: pageLoading .8s ease-in-out infinite
+
+  .wrapper
+    height: 100%
+    max-width: 500px
+    @include flex($justify: flex-start)
+    flex-direction: column
+    gap: 4rem
+
+    &.loading-div
+
+    .event-title
+      font-size: 1.5rem
+      font-weight: 500
+      text-align: center
+
+    .item
+      padding: 1.5rem
+      text-align: center
+      box-shadow: 0 0 20px rgba($dark, .15)
+      border-radius: 1rem
+      max-width: 600px
+      width: 100%
+
+      .name
+        font-size: 1.5rem
+        margin-bottom: 1rem
+        font-weight: 600
+
+      ul
+        margin-bottom: 1.5rem
+
+        li
+          font-size: .9rem
+          margin-bottom: .4rem
+          color: rgba($dark, .8)
+
+      button
+        padding: .8rem
+        font-size: 1rem
+        border-radius: .4rem
+        background-color: #0DAF0A
+        box-shadow: 0 3px 4px rgba(#0DAF0A, .6)
+        color: $light
+        text-transform: uppercase
+        font-weight: 500
+        cursor: pointer
+        @include fastTrans()
+        position: relative
+
+        &.submit
+          width: 100%
+
+        &.checkout
+          background-color: #A00000
+          box-shadow: 0 3px 4px rgba(#A00000, .6)
+
+          &.active
+            color: #A00000
+
+          &:hover
+            box-shadow: 0 4px 10px rgba(#A00000, .8)
+
+        &::after
+          content: ''
+          position: absolute
+          left: 50%
+          top: 50%
+          transform: translate(-50%, -50%)
+          height: 1.8rem
+          width: 1.8rem
+          border-radius: 50%
+          border: 1.5px solid $light
+          border-top-color: #000
+          border-bottom-color: #000
+          animation: pageLoading .8s ease-in-out infinite
+          pointer-events: none
+          opacity: 0
+
+        &:hover
+          transform: translateY(-2px)
+          box-shadow: 0 4px 10px rgba(#0DAF0A, .8)
+
+        &.active
+          color: #0DAF0A
+          opacity: .6
+
+          &::after
+            opacity: 1
+
+    .available-meal
+      margin: 2rem 0
+
+      h3
+        font-size: 1.5rem
+        font-weight: 500
+
+      .button-list
+        margin-top: 1rem
+        @include flex($justify: center)
+        flex-wrap: wrap
+        gap: .5rem
+
+        button
+          margin-bottom: 1rem
+          border-radius: 3rem
+          padding: .5rem 1rem
+          box-shadow: none
+          text-transform: capitalize
+          @include flex($justify: center)
+          gap: .5rem
+          font-size: 1rem

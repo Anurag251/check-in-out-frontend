@@ -1,0 +1,317 @@
+@use './helper/_variables' as *
+@use './helper/_mixin' as *
+@use './layout/_layout' as *
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap')
+@import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap')
+
+*
+  margin: 0
+  padding: 0
+  box-sizing: border-box
+  font-family: 'Poppins', sans-serif
+  border: none
+  outline: none
+  background: none
+  text-decoration: none
+  list-style: none
+  scroll-behavior: smooth !important
+
+:root
+  --pri: #f7a81b
+  --sec: #17458f
+  --prirgb: #55a960
+  --secrgb: #022c46
+  --swiper-theme-color: #009248
+
+body
+  scroll-behavior: smooth !important
+  // background-color: rgba($dark, .04)
+
+section
+  margin-top: 100px
+
+p
+  font-size: .9rem
+  line-height: 170%
+
+/***********      wrapper      ***********/
+.wrapper
+  max-width: 1250px
+  margin: 0 auto
+  padding: 0 1.3rem
+
+  &.noSpace
+    max-width: auto
+    padding: 0
+
+/***********      book-button      ***********/
+.book-button, .button-more, .submit-button
+  padding: .8rem 1.7rem
+  border-radius: 3rem
+  border: 2px solid transparent
+  color: $light
+  font-weight: 600
+  font-size: .9rem
+  margin-top: 1rem
+  cursor: pointer
+  position: relative
+  overflow: hidden
+  @include trans()
+
+  &.button-border
+    border-color: $pri
+    color: $pri
+
+    &::after
+      top: 0
+      height: 0
+
+    &:hover
+      color: $light
+      border-color: transparent
+
+      &::after
+        height: 100%
+
+  &::after
+    content: ""
+    position: absolute
+    left: 0
+    bottom: 0
+    width: 100%
+    height: 100%
+    // background-image: linear-gradient(90deg, $pri, $sec)
+    @include trans()
+    z-index: 1
+
+  &:hover
+    color: $pri
+    border-color: $pri
+
+    &::after
+      height: 0
+
+  &.button-dark
+    &:hover
+      color: $light
+      border-color: $light
+
+  span
+    position: relative
+    z-index: 2
+
+// .custom-button
+//   padding: .7rem 1.4rem
+//   background-color: $pri
+//   color: $light
+//   font-weight: 500
+//   font-size: .9rem
+//   cursor: pointer
+//   border-radius: .4rem
+
+//   &:hover
+//     background-color: $sec
+
+.custom-button
+  @include customButton($bdrc: $light, $color: $light)
+  cursor: pointer
+
+  &:hover
+    background-color: $light
+    color: $dark
+
+  &.unique
+    border: none
+    text-decoration: underline
+    position: relative
+    padding-left: 20px
+
+    &:hover
+      color: $light !important
+      background-color: transparent !important
+
+      &::after
+        height: 35px
+        width: 100%
+
+    &::after
+      content: ''
+      position: absolute
+      left: 0
+      top: 50%
+      transform: translateY(-50%)
+      height: 8px
+      width: 8px
+      border: 1px solid $light
+      border-radius: 50px
+      @include fastTrans()
+
+  &.link
+    color: $sec
+
+    &:hover
+      color: $sec !important
+
+    &::after
+      border: 1px solid $sec
+
+.circle-buttton
+  height: 3rem
+  width: 3rem
+  position: relative
+  cursor: pointer
+
+  &.opp
+    &::after
+      left: 62%
+
+  &:hover
+    &::after
+      left: 50%
+
+  &::after
+    content: ""
+    position: absolute
+    left: 38%
+    top: 50%
+    transform: translate(-50%, -50%)
+    height: 97%
+    width: 97%
+    border-radius: 50%
+    border: 1px solid $pri
+    z-index: 1
+    transition: .4s
+
+  i
+    color: $light
+    font-size: 1.1rem
+    @include flex($justify: center)
+    background-color: $pri
+    height: 100%
+    width: 100%
+    border-radius: 50%
+    position: relative
+    z-index: 2
+
+.view-all
+  @include flex($justify: center)
+  width: 100%
+  margin-top: 2rem
+
+  .custom-button
+    font-size: 1.2rem
+    font-weight: 500
+
+    &:hover
+      &::after
+        height: 45px
+
+    &::after
+      height: 10px
+      width: 10px
+
+/***********      title      ***********/
+.title
+  text-align: center
+  margin-bottom: 50px
+  @include flex($justify: center)
+  flex-direction: column
+
+  h4
+    font-size: 14px
+    font-weight: 600
+    text-transform: uppercase
+
+  h2
+    font-size: 3rem
+    line-height: 120%
+    font-weight: 500
+    max-width: 800px
+
+.section-title
+  text-align: center
+  padding: 5rem 0
+  margin-bottom: 4rem
+  position: relative
+  background-color: $sec
+
+  &::after
+    content: ""
+    position: absolute
+    top: 0
+    left: 0
+    height: 100%
+    width: 100%
+    background-image: url(../assets/images/banner-static-bg.jpeg)
+    opacity: 0.08
+    z-index: 1
+
+  h2
+    position: relative
+    color: $light
+    font-size: 3rem
+    z-index: 2
+
+.page-title-section
+  position: relative
+  height: 18rem
+  @include bgImage()
+  // background: $sec !important
+
+  .page-title-section-image
+    position: absolute
+    top: 0
+    left: 0
+    height: 100%
+    width: 100%
+    @include image()
+    // opacity: .08
+    z-index: 1
+
+  .page-title
+    position: absolute
+    bottom: 0
+    left: 50%
+    transform: translateX(-50%)
+    color: $light
+    z-index: 2
+    text-align: center
+    width: 100%
+    padding: 0 .5rem
+
+    h5
+      font-size: 1.4rem
+      margin-bottom: 1.5rem
+      font-weight: 400
+      a
+        color: $light
+
+        &:hover
+          color: $pri
+
+    h2
+      font-size: 5.5rem
+      line-height: 3.8rem
+      text-transform: uppercase
+
+.lazyLoadImage
+  position: absolute
+  top: 0
+  left: 0
+  @include trans()
+
+.lazyLoadImage1
+  position: absolute
+  top: 0
+  left: 0
+  opacity: 0
+  @include trans()
+
+div
+
+@import './sections/_header'
+@import './sections/_custom-input'
+@import './sections/_checkinCheckout'
+@import './sections/_login'
+// @import './layout/_responsive'

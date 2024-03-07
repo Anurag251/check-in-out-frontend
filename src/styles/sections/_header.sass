@@ -1,0 +1,39 @@
+@use '../helper/_variables' as *
+@use '../helper/_mixin' as *
+@use '../layout/_layout' as *
+
+header
+  background-color: $light
+  padding: .4rem 0
+  width: 100%
+
+  .wrapper
+    @include flex($justify: space-between)
+
+    .logo
+      height: 70px
+      max-width: 500px
+
+      img
+        @include image()
+        object-fit: contain
+
+    button
+      padding: .4rem .8rem
+      border-radius: 4px
+      background-color: #141414
+      color: $light
+      font-size: 16px
+      cursor: pointer
+// header
+//   margin: 1rem 0 2rem
+
+//   .wrapper
+//     @include flex($justify: center)
+
+//     .logo
+//       height: 4rem
+
+//       img
+//         @include image()
+//         object-fit: contain
