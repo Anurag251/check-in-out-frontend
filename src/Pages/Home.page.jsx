@@ -1,15 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { AllDataContext } from "../context/AllData.context";
-
+import { userApi } from "../utils/api";
+import { useParams } from "react-router-dom";
 const Home = () => {
-  const { message, setMessage } = useContext(AllDataContext);
+  const { message, setMessage ,isloggedIn} = useContext(AllDataContext);
   const location = useLocation();
   const [status, setStatus] = useState(null);
   const [pageData, setPageData] = useState(null);
   const [buttonLoading, setButtonLoading] = useState(false);
 
-  const userId = location.pathname.split("/").pop();
+  const {id:userId} = useParams()
+
 
   const getCurrentDate = () => {
     const today = new Date();
@@ -64,30 +66,35 @@ const Home = () => {
 
   useEffect(() => {
     try {
-      fetch(`http://localhost:3000/${userId}`)
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.message === "User has been checked in.") {
-            setStatus(true);
-          } else if (
-            (data.message === "User not found." && data.user === undefined) ||
-            data.user === null
-          ) {
-            setMessage({
-              ...message,
-              message: true,
-              title: "Error",
-              type: "error",
-              desc: data.message,
-            });
-          } else {
-            setStatus(false);
-          }
+      userApi.get('/1').then(res=>{
+        console.log(res.data.data)
+      }).catch(err=>{
+        console.log({err})
+      })
+      // fetch(`http://localhost:3000/${userId}`)
+      //   .then((res) => res.json())
+      //   .then((data) => {
+      //     if (data.message === "User has been checked in.") {
+      //       setStatus(true);
+      //     } else if (
+      //       (data.message === "User not found." && data.user === undefined) ||
+      //       data.user === null
+      //     ) {
+      //       setMessage({
+      //         ...message,
+      //         message: true,
+      //         title: "Error",
+      //         type: "error",
+      //         desc: data.message,
+      //       });
+      //     } else {
+      //       setStatus(false);
+      //     }
 
-          setPageData(data);
-        });
+      //     setPageData(data);
+      //   });
     } catch (err) {
-      console.error(err);
+      console.error(err,'err');
     }
   }, [userId]);
 
