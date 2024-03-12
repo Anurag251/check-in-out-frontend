@@ -1,9 +1,7 @@
 import axios from "axios";
 
-function createAPI() {
   const api = axios.create({
     baseURL: "https://rotarydistrict3292.org.np/api",
-
     headers: {
       "content-type": "application/json",
       accept: "application/json",
@@ -11,7 +9,42 @@ function createAPI() {
     },
   });
 
-  return api;
-}
 
-export const apis = createAPI();
+  const userapi = axios.create({
+    baseURL: import.meta.env.VITE_BACKEND_API
+    // headers: {
+    //   "content-type": "application/json",
+    //   accept: "application/json",
+    //   // Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+    // },
+  });
+
+
+
+// userapi.interceptors.response.use(
+//   (response) => {
+//       return response;
+//   },
+//   (err) => {
+//       if (err.response.status === 401) {
+//           //redirect to login
+       
+//       }
+
+//       return Promise.reject(err); 
+//   }
+// );
+
+userapi.interceptors.request.use(config=>{
+  const token = localStorage.getItem("token");
+  console.log(token)
+  if (token) {
+    config.headers.Authorization =`Bearer ${token}`
+      // config.headers.common["authorization"] = "Bearer " + token;
+  }
+  return config
+})
+
+
+export const userApi = userapi
+export const apis = api

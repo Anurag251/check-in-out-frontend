@@ -1,9 +1,11 @@
 import { createContext, useEffect, useState } from "react";
 import { apis } from "../utils/api";
+import {jwtDecode} from 'jwt-decode'
 
 export const AllDataContext = createContext();
 
 export const AllDataProvider = ({ children }) => {
+  const [isloggedIn,setIsLoggedIn] = useState(null)
   const [clubData, setClubData] = useState(null);
   const [eventDatas, setEventDatas] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -14,6 +16,16 @@ export const AllDataProvider = ({ children }) => {
     type: "",
     desc: "",
   });
+  useEffect(()=>{
+  let token = localStorage.getItem('token')
+  console.log('token',token)
+  if(token){
+   token =  jwtDecode(token)
+   setIsLoggedIn(token)
+  }
+  },[])
+
+
 
   useEffect(() => {
     // Fetch top-nav data
@@ -38,6 +50,8 @@ export const AllDataProvider = ({ children }) => {
   return (
     <AllDataContext.Provider
       value={{
+        isloggedIn,
+        setIsLoggedIn,
         loading,
         setLoading,
         clubData,
