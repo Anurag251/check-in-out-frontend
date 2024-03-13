@@ -11,7 +11,6 @@ const ProtectRoutes = () => {
     let url = e.target.value
      console.log({url})
     if (url && (url.includes('https') || url.includes('http'))) {
-     
       setScannedData(url)
 
     }
@@ -20,7 +19,7 @@ const ProtectRoutes = () => {
   useEffect(()=>{
     const eventListner = function(){
       if(location.pathname =='/'){
-        inputRef.current.focus();
+        inputRef?.current?.focus();
       }
     }
      document.addEventListener('click',eventListner)
@@ -36,7 +35,7 @@ const ProtectRoutes = () => {
   const handleClick = () => {
     // const string = ' https://events.rotarydistrict3292.org.np/vieweventregistrationdetails/7'
     const id = scannedData.slice(-1)
-   
+
     navigate('/'+id)
   }
 

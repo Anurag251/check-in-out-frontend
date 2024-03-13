@@ -12,7 +12,7 @@ const Home = () => {
   const [buttonLoading, setButtonLoading] = useState(false);
 
   const userId = location.pathname.split("/").pop();
-
+console.log({pageData})
   // const URL = "https://event.katakinne.com";
   const URL = "http://localhost:3000";
 
@@ -21,10 +21,13 @@ const Home = () => {
       fetch(`${URL}/checkinout/${userId}`)
         .then((res) => res.json())
         .then((data) => {
+          if(data.message =='Invalid Id.'){
+            data.message = "User not found."
+          }
           if (data.message === "User has been checked in.") {
             setStatus(true);
           } else if (
-            (data.message === "User not found." && data.user === undefined) ||
+            ((data.message === "User not found.")  && data.user === undefined) ||
             data.user === null
           ) {
             setMessage({
