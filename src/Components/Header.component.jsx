@@ -13,7 +13,6 @@ export const Header = () => {
             <img src="/rotary-logo.svg" alt="logo" />
           </div>
         </Link>
-
         {localStorage.getItem("token") ? (
           <button
             onClick={() => {

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import "./styles/main.sass";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Home from "./Pages/Home.page";
 import { LoginPopup } from "./Components/Login.component";
 import { Header } from "./Components/Header.component";
@@ -11,6 +11,7 @@ import ProtectRoutes from "./Routes/ProtectRoutes";
 
 const App = () => {
   const { message, setMessage, isloggedIn } = useContext(AllDataContext);
+  const nav = useNavigate()
 
   return (
     <div className="App">
@@ -41,6 +42,7 @@ const App = () => {
             <button
               className="message-button"
               onClick={() => {
+                nav('/')
                 setMessage({
                   message: false,
                   title: "",
