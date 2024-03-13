@@ -1,0 +1,159 @@
+@use '../helper/_variables' as *
+@use '../helper/_mixin' as *
+@use '../layout/_layout' as *
+
+.group
+  height: 3rem
+  position: relative
+  margin-bottom: 1.5rem
+
+  .input-icon
+    position: absolute
+    right: 1rem
+    top: 50%
+    transform: translateY(-50%)
+    height: 1.1rem
+    width: 1.1rem
+
+    &.eye-icon
+      cursor: pointer
+
+      &.active
+        &::after
+          height: 0
+
+      &::after
+        content: ''
+        position: absolute
+        left: 50%
+        top: 50%
+        transform: translate(-50%, -50%) rotate(45deg)
+        height: 105%
+        width: 1.5px
+        background-color: $dark
+        border-right: 2px solid $light
+        z-index: 2
+        @include trans()
+
+    svg
+      height: 100%
+      width: 100%
+
+  &.fileType
+    border: 1.5px solid #ACACAC
+    border-radius: .4rem
+    padding: .3rem 1rem
+
+  &.active
+    border-color: $sec
+
+    .custom-input
+      padding: 0 !important
+      border: none !important
+      padding-top: .5rem !important
+
+  &.textarea
+    min-height: 6rem
+    height: auto
+
+    .custom-input
+      min-height: 8rem
+      height: 100%
+      max-height: 15rem
+
+    label
+      top: 1.3rem
+
+    textarea
+      resize: vertical
+      min-height: 3.3rem
+
+  &.error
+    border-color: #A00000
+    margin-bottom: 2rem
+
+    label
+      color: #A00000
+
+  .input-error
+    position: absolute
+    bottom: -1.2rem
+    left: .4rem
+    text-align: left
+    font-size: 12px
+    font-weight: 500
+    color: #A00000
+
+  label
+    position: absolute
+    top: 50%
+    left: .5rem
+    padding: 0 .5rem
+    transform: translateY(-50%)
+    @include fastTrans()
+    pointer-events: none
+    color: lighten($dark, 35%)
+    // text-transform: uppercase
+    font-size: .9rem
+    // letter-spacing: 1px
+    max-width: 90%
+    overflow: hidden
+    text-overflow: ellipsis
+    white-space: nowrap
+
+    &::after
+      content: ''
+      position: absolute
+      top: 50%
+      left: 0
+      transform: translateY(-50%)
+      height: 4px
+      width: 100%
+      background-color: $light
+      z-index: -1
+
+    &.active, &.autoActive
+      color: $sec
+      top: 0 !important
+      transform: translateY(-50%) !important
+      font-size: .77rem !important
+      font-weight: 600 !important
+
+  .inner-input
+    width: 100%
+    height: 100%
+
+  .custom-input
+    width: 100%
+    height: 100%
+    font-size: 1rem
+    border: 1px solid #ACACAC
+    border-radius: .3rem
+    padding: .5rem 1rem
+    text-align: left
+
+    &::placeholder
+      color: transparent
+
+    &:focus
+      border-color: $sec
+
+      &::placeholder
+        color: rgba($dark, .6)
+
+    &:focus ~ label
+      @include shrinkLabel()
+      color: $sec
+
+    &.active
+      border-color: $sec
+
+  .custom-input[type='file']
+    opacity: 0
+    padding-top: .2rem
+    border: 1px solid #ACACAC
+    border-radius: .4rem
+    padding: .5rem 1rem
+
+    &.active[type='file']
+      opacity: 1

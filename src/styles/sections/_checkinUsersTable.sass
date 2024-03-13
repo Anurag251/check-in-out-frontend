@@ -1,0 +1,70 @@
+@use '../helper/_variables' as *
+@use '../helper/_mixin' as *
+@use '../layout/_layout' as *
+
+.checkin-users-table
+  margin: 3rem 0
+
+  .action-section
+    @include flex($justify: space-between)
+
+  .select-date
+    padding: .5rem 1.5rem
+    border: 1px solid rgba($dark, .7)
+    border-radius: .4rem
+    margin-bottom: 1rem
+    font-size: 1rem
+
+  .export-to-excel
+    padding: .5rem 1.5rem
+    background-color: $sec
+    color: $light
+    border-radius: .4rem
+    margin-left: .5rem
+    cursor: pointer
+    @include flex($justify: center)
+    gap: .5rem
+    font-size: 1rem
+
+    &:hover
+      background-color: darken($sec, 10%)
+
+  table
+    width: 100%
+
+    tr
+      background-color: $light
+
+      &:nth-child(even)
+        background-color: rgba($dark, .1)
+
+      &.loading
+        background: linear-gradient(90deg, rgba($dark, .12), rgba($dark, .05))
+        color: transparent
+        animation: blink 1s ease-in-out alternate infinite
+
+        &:nth-child(even)
+          background: linear-gradient(90deg, rgba($dark, .2), rgba($dark, .1))
+
+    th
+      text-align: left
+      font-size: .8rem
+      background-color: $sec
+      color: $light
+      font-weight: 500
+      padding: .3rem .5rem
+
+    td
+      font-size: .8rem
+      padding: .3rem .5rem
+
+      &:nth-last-child(2), &:nth-last-child(3), &:nth-last-child(4)
+        width: 7rem
+
+      &:nth-last-child(1)
+        min-width: 10rem
+
+      .meal-list
+        @include flex($justify: flex-start)
+        gap: .5rem
+        flex-wrap: wrap

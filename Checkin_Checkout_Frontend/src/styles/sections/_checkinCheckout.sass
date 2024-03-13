@@ -129,74 +129,14 @@
     max-width: 500px
     @include flex($justify: flex-start)
     flex-direction: column
-    gap: 2rem
-
-    @keyframes skeletonLoading
-      0%
-        left: -10%
-        opacity: 1
-
-      100%
-        left: 110%
-        opacity: 1
-
-    @keyframes blink
-      0%
-        opacity: .4
-
-      100%
-        opacity: 1
+    gap: 4rem
 
     &.loading-div
-      .event-title
-        width: 30rem
-        background: linear-gradient(90deg, rgba($dark, .12), rgba($dark, .05))
-        color: transparent
-        animation: blink 1s ease-in-out alternate infinite
-
-      .item
-        @include flex($justify: center)
-        flex-direction: column
-        overflow: hidden
-        position: relative
-
-        &::after
-          content: ""
-          position: absolute
-          left: -10%
-          top: 50%
-          transform: translate(-50%, -50%)
-          height: 100%
-          width: 10rem
-          background: linear-gradient(90deg, rgba($light, .0), rgba($light, .5), rgba($light, .0))
-          opacity: 0
-          animation: skeletonLoading 1.5s ease-in-out infinite
-
-        h3
-          background: linear-gradient(90deg, rgba($dark, .12), rgba($dark, .05))
-          color: transparent
-          width: 90%
-
-        ul
-          @include flex($justify: center)
-          flex-direction: column
-          width: 100%
-          li
-            background: linear-gradient(90deg, rgba($dark, .12), rgba($dark, .05))
-            color: transparent
-            width: 70%
-
-        button
-          background: linear-gradient(90deg, rgba($dark, .12), rgba($dark, .05))
-          color: transparent
-          box-shadow: none
-          pointer-events: none
 
     .event-title
       font-size: 1.5rem
       font-weight: 500
       text-align: center
-      margin-top: 2rem
 
     .item
       padding: 1.5rem
@@ -274,7 +214,7 @@
             opacity: 1
 
     .available-meal
-      margin: 2rem 0 0
+      margin: 2rem 0
 
       h3
         font-size: 1.5rem
@@ -296,12 +236,8 @@
           gap: .5rem
           font-size: 1rem
 
-          &.disabled, &:disabled
+          &.disabled
             background-color: rgba($dark, .3)
-            color: $dark !important
             box-shadow: none !important
             transform: translate(0) !important
             cursor: not-allowed
-
-            &::after
-              display: none

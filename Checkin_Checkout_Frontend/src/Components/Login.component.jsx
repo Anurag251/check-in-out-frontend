@@ -1,12 +1,9 @@
 import { useContext, useState } from "react";
 import { CustomInputComponent } from "./CustomInput.component";
 import { AllDataContext } from "../context/AllData.context";
-import { apis, userApi } from "../utils/api";
-import { jwtDecode } from "jwt-decode";
 
 export const LoginPopup = () => {
-  const { loginPopup, setLoginPopup, setIsLoggedIn, setMessage } =
-    useContext(AllDataContext);
+  const { loginPopup, setLoginPopup } = useContext(AllDataContext);
 
   const [loginData, setLoginData] = useState({
     username: "",
@@ -23,22 +20,6 @@ export const LoginPopup = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     setLoading(true);
-    userApi
-      .post("/login", loginData)
-      .then((res) => {
-        setLoginPopup(false);
-        setIsLoggedIn(jwtDecode(res.data.token));
-        localStorage.setItem("token", res.data.token);
-        setMessage({
-          ...message,
-          message: true,
-          title: "Welcome back",
-          type: "success",
-          desc: "You're all set! Scan",
-        });
-      })
-      .catch((err) => console.log({ err }))
-      .finally(() => setLoading(false));
   };
 
   return (

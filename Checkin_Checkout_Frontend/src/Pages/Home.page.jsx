@@ -1,20 +1,23 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { AllDataContext } from "../context/AllData.context";
+import moment from "moment-timezone";
 import MealComponent from "../Components/Meal.component";
 
 const Home = () => {
-  const navigate = useNavigate();
-  const { message, setMessage, isloggedIn } = useContext(AllDataContext);
+  const { message, setMessage } = useContext(AllDataContext);
   const location = useLocation();
   const [status, setStatus] = useState(null);
   const [pageData, setPageData] = useState(null);
   const [buttonLoading, setButtonLoading] = useState(false);
+  const [mealLoading, setMealLoading] = useState(false);
 
   const userId = location.pathname.split("/").pop();
 
   // const URL = "https://event.katakinne.com";
   const URL = "http://localhost:3000";
+
+  console.log(pageData);
 
   useEffect(() => {
     try {
@@ -43,7 +46,7 @@ const Home = () => {
     } catch (err) {
       console.error(err);
     }
-  }, [userId, status]);
+  }, [userId]);
 
   const checkin = () => {
     setButtonLoading(true);
@@ -57,7 +60,6 @@ const Home = () => {
 
           if (data.message === "User checked in successfully.") {
             setStatus(true);
-            navigate("/");
           } else {
             setStatus(false);
           }
@@ -75,7 +77,6 @@ const Home = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          navigate("/");
           setButtonLoading(false);
           if (data.message === "User checked out successfully.") {
             setStatus(false);
@@ -92,7 +93,46 @@ const Home = () => {
     <div className="checked-checkout-page">
       {/* <div className={`page-loading ${pageLoading ? "active" : ""}`}></div> */}
 
-      {pageData === null || pageData === undefined ? (
+      <div className={`popup-message ${message.message ? "active" : ""}`}>
+        <div
+          className={`message-bg`}
+          onClick={() => {
+            setMessage({
+              message: false,
+              title: "",
+              type: "",
+              desc: "",
+            });
+          }}
+        ></div>
+
+        <div className={`box ${message.type === "error" ? "error" : ""}`}>
+          <div className="message-icon">
+            {message.type === "success" ? (
+              <i className="fas fa-check"></i>
+            ) : (
+              <i className="fas fa-times"></i>
+            )}
+          </div>
+          <div className="message-title">{message.title}</div>
+          <p>{message.desc}</p>
+          <button
+            className="message-button"
+            onClick={() => {
+              setMessage({
+                message: false,
+                title: "",
+                type: "",
+                desc: "",
+              });
+            }}
+          >
+            {message.type === "success" ? "Continue" : "Try Again"}
+          </button>
+        </div>
+      </div>
+
+      {pageData === null ? (
         <div className="wrapper loading-div">
           <div className="event-title">Loading...</div>
 
@@ -107,56 +147,39 @@ const Home = () => {
             <button>Loading...</button>
           </div>
         </div>
-      ) : (pageData?.message === "User not found." &&
-          pageData?.user === undefined) ||
-        pageData?.user === null ? (
+      ) : (pageData.message === "User not found." &&
+          pageData.user === undefined) ||
+        pageData.user === null ? (
         <h1>User not found.</h1>
       ) : (
         <div className="wrapper">
-          <div className="event-title">{pageData?.user.EventName}</div>
+          <div className="event-title">{pageData.user["Event Name"]}</div>
 
           <div className="item">
-            <h3 className="name">{pageData?.user["Name"]}</h3>
+            <h3 className="name">{pageData.user["Name"]}</h3>
 
             <ul>
-              {pageData?.user.Email !== null && pageData?.user.Email !== "" ? (
-                <li>{pageData?.user.Email}</li>
-              ) : null}
-
-              {pageData?.user.ClubName !== null &&
-              pageData?.user.ClubName !== "" ? (
-                <li>{pageData?.user.ClubName}</li>
-              ) : null}
-
-              {pageData?.user.Position !== null &&
-              pageData?.user.Position !== "" ? (
-                <li>{pageData?.user.Position}</li>
-              ) : null}
+              <li>{pageData.user["Email"]}</li>
+              <li>{pageData.user["Phone Number"]}</li>
             </ul>
 
-            {isloggedIn.role === "kitchen" ? (
-              status ? (
-                <MealComponent pageData={pageData} />
-              ) : null
-            ) : null}
+            {status ? <MealComponent pageData={pageData} /> : null}
 
-            {isloggedIn.role === "gatekeeper" ? (
-              status ? (
-                <button
-                  className={`submit checkout ${buttonLoading ? "active" : ""}`}
-                  onClick={checkout}
-                >
-                  Checkout
-                </button>
-              ) : (
-                <button
-                  className={`submit ${buttonLoading ? "active" : ""}`}
-                  onClick={checkin}
-                >
-                  Checkin
-                </button>
-              )
-            ) : null}
+            {status ? (
+              <button
+                className={`submit checkout ${buttonLoading ? "active" : ""}`}
+                onClick={checkout}
+              >
+                Checkout
+              </button>
+            ) : (
+              <button
+                className={`submit ${buttonLoading ? "active" : ""}`}
+                onClick={checkin}
+              >
+                Checkin
+              </button>
+            )}
           </div>
         </div>
       )}
